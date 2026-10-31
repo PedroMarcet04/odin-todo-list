@@ -33,6 +33,7 @@ class ToDoHTML {
 
     generateHTML() {
         this.#html = document.createElement("div");
+        this.#html.id = this.#data.id;
         this.#html.classList.add("todo-item");
 
         const title = document.createElement("h3");
@@ -44,6 +45,14 @@ class ToDoHTML {
         description.classList.add("desc");
         description.textContent = this.#data.description;
         this.#html.appendChild(description);
+    }
+
+    refresh() {
+        const title = this.#html.querySelector(".title");
+        title.textContent = this.#data.title;
+
+        const description = this.#html.querySelector(".desc");
+        description.textContent = this.#data.description;
     }
 
     constructor(data) {
@@ -58,12 +67,22 @@ class ToDoHTML {
 }
 
 class ToDoItem {
-    data
+    #data
     html
 
     constructor() {
-        this.data = new ToDoData();
-        this.html = new ToDoHTML(this.data);
+        this.#data = new ToDoData();
+        this.html = new ToDoHTML(this.#data);
+    }
+
+    set title(t) {
+        this.#data.title = t;
+        this.html.refresh();
+    }
+
+    set description(d) {
+        this.#data.description = d;
+        this.html.refresh();
     }
 }
 export default ToDoItem;
